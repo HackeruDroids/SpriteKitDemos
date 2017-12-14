@@ -25,6 +25,17 @@ class GameScene: SKScene {
     
     func addShapes(){
         //circle, triangle, rectangle
+        let circle = SKSpriteNode(imageNamed: "circle")
+        circle.position = CGPoint(x: 0.25 * size.width, y: size.height - circle.size.height / 2)
+        addChild(circle)
+        
+        let triangle = SKSpriteNode(imageNamed: "triangle")
+        triangle.position = CGPoint(x: 0.5 * size.width, y: size.height - circle.size.height / 2)
+        addChild(triangle)
+        
+        let rectangle = SKSpriteNode(imageNamed: "rectangle")
+        rectangle.position = CGPoint(x: 0.75 * size.width, y: size.height - circle.size.height / 2)
+        addChild(rectangle)
     }
     
     func addBall(){

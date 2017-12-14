@@ -17,6 +17,22 @@ class GameScene: SKScene {
         backs.position = CGPoint(x: frame.midX, y: frame.midY)
         backs.size = frame.size
         addChild(backs)
+        
+        addBall()
+        addShapes()
+    }
+    
+    
+    func addShapes(){
+        //circle, triangle, rectangle
+    }
+    
+    func addBall(){
+        let ball = SKSpriteNode(imageNamed: "pokeball")
+        ball.position = view!.center
+        ball.size = CGSize(width: 35, height: 35)
+        ball.name = "ball"
+        addChild(ball)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -29,9 +45,6 @@ class GameScene: SKScene {
         label.position = location//CGPoint(x: frame.midX, y: frame.midY)
         label.fontSize = 7
         addChild(label)
-        
-        
-        
     }
     
     override func update(_ currentTime: TimeInterval) {

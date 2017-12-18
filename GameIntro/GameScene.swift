@@ -25,19 +25,63 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if bodyA.categoryBitMask == BallCategory && bodyB.categoryBitMask == FloorCategory{
-            print("You loose...")
+           showStatus(win: false)
         }else if bodyA.categoryBitMask == BallCategory && bodyB.categoryBitMask == BrickCategory{
            //which body to remove? B
             breakBrick(node: bodyB.node!)
         }
         
     }
-    
-    func  breakBrick(node: SKNode){
-        let fade = SKAction.fadeOut(withDuration: 0.3)
-        let seq = SKAction.sequence([fade, SKAction.removeFromParent()])
-        node.run(seq)
+    var numBricks = 8
+    func breakBrick(node: SKNode){
+        //remove the original brick
+        node.removeFromParent()
+        //let fade = SKAction.fadeOut(withDuration: 0.3)
+        //let seq = SKAction.sequence([fade, SKAction.removeFromParent()])
+        //node.run(seq)
+        
+        //1) init the emitter,
+        guard let emitter = SKEmitterNode(fileNamed: "emitter") else {return}
+        //2) position the emitter
+        emitter.position = node.position
+        
+        //3) add the emitter
+        addChild(emitter)
+        
+        
+        //wait and remove the emitter!
+        emitter.run(SKAction.sequence([SKAction.wait(forDuration: 0.4), SKAction.removeFromParent()])){
+            self.numBricks -= 1
+            
+            self.checkWin()
+        }
     }
+    func checkWin(){
+        //TODO: stop the game, show status, save the score...
+        //if game is over, showStatus,
+        if numBricks <= 0 {
+            showStatus(win: true)
+        }
+    }
+    
+    func showStatus(win: Bool){
+        let label = SKLabelNode(fontNamed: "Chalkduster")
+        label.text = win ? "You Rock!" : "You Loose 😜"
+        label.position =  CGPoint(x: frame.midX, y: frame.midY)
+        addChild(label)
+        
+        stop()
+    }
+    
+    func stop(){
+        guard let ball = childNode(withName: "ball") else {return}
+        ball.removeFromParent()
+    }
+    
+    func restart(){
+        
+    }
+    
     func didEnd(_ contact: SKPhysicsContact) {
         //
     }
@@ -54,10 +98,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         //register self as the delegate
         physicsWorld.contactDelegate = self
-        let backs = SKSpriteNode(imageNamed: "back")
-        backs.position = CGPoint(x: frame.midX, y: frame.midY)
-        backs.size = frame.size
-        addChild(backs)
+     
+        let back1 = SKSpriteNode(imageNamed: "back")
+        back1.name = "back1"
+        back1.position = CGPoint(x: frame.midX, y: frame.midY)
+        back1.size = frame.size
+        addChild(back1)
+        
+        
+        let back2 = SKSpriteNode(imageNamed: "back")
+        back2.name = "back2"
+        back2.size = frame.size
+        back2.position = CGPoint(x: frame.midX + back1.size.width, y: frame.midY)
+        
+        addChild(back2)
+        
+        let moveAction = SKAction.moveBy(x: -back1.size.width, y: 0, duration: 4)
+        let goBackAction = SKAction.moveBy(x: back1.size.width, y: 0, duration: 0)
+        
+        let magic = SKAction.repeatForever(SKAction.sequence([moveAction, goBackAction]))
+        
+        back1.run(magic)
+        back2.run(magic)
         addPaddle()
         addFloor()
         addBall()
@@ -88,7 +150,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
  
         let w = brick.size.width
         let h = brick.size.height
-        let n = 8
+        let n = numBricks
         let vWidth = size.width
         let vHeight = size.height
  

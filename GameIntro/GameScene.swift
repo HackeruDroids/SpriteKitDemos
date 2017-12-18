@@ -27,11 +27,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if bodyA.categoryBitMask == BallCategory && bodyB.categoryBitMask == FloorCategory{
             print("You loose...")
         }else if bodyA.categoryBitMask == BallCategory && bodyB.categoryBitMask == BrickCategory{
-            print("Break a brick")
+           //which body to remove? B
+            breakBrick(node: bodyB.node!)
         }
         
     }
     
+    func  breakBrick(node: SKNode){
+        let fade = SKAction.fadeOut(withDuration: 0.3)
+        let seq = SKAction.sequence([fade, SKAction.removeFromParent()])
+        node.run(seq)
+    }
     func didEnd(_ contact: SKPhysicsContact) {
         //
     }
@@ -185,36 +191,51 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //play with actions:
     func addSpaceShip(point: CGPoint){
-        //1) add a spaceship (add a spritenode position it using the point)
-        let ship = SKSpriteNode(imageNamed: "Spaceship")
-        ship.position = point
-        ship.size = CGSize(width: 50, height: 50)
-        //ship.scale(to: CGSize(width: 0.2, height: 0.2))
-        addChild(ship)
         
-        
-        let moveAction = SKAction.moveTo(x: frame.width + ship.frame.width / 2, duration: 1)
-       
-        let rotateAction = SKAction.rotate(byAngle: .pi / 4, duration: 1)
-        
-        let waitAction = SKAction.wait(forDuration: 0.4)
-        let sequence = SKAction.sequence([rotateAction, moveAction])
-        
-        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
-        
-        let removeAction = SKAction.removeFromParent() //Important!
-        
-        let zoomIn = SKAction.scale(by: 2, duration: 1)
-        
-        let group = SKAction.group([moveAction, rotateAction])
-        
-        let playSoundAction = SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false)
-        let seq = SKAction.sequence([group, SKAction.removeFromParent()])
-        ship.run(group)
+        //spawn, wait, removeFromParent
         
         let spawnBlockAction = SKAction.run {
-            //let space
+            let ship = SKSpriteNode(imageNamed: "Spaceship")
+            ship.position = point
+            ship.size = CGSize(width: 50, height: 50)
+            self.addChild(ship)
+            //move rotate
+            ship.run(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.removeFromParent()]))
         }
+        
+        let sequence = SKAction.sequence([spawnBlockAction, SKAction.wait(forDuration: 1)])
+        
+        self.run(SKAction.repeatForever(sequence))
+//        //1) add a spaceship (add a spritenode position it using the point)
+//        let ship = SKSpriteNode(imageNamed: "Spaceship")
+//        ship.position = point
+//        ship.size = CGSize(width: 50, height: 50)
+//        //ship.scale(to: CGSize(width: 0.2, height: 0.2))
+//        addChild(ship)
+//
+//
+//        let moveAction = SKAction.moveTo(x: frame.width + ship.frame.width / 2, duration: 1)
+//
+//        let rotateAction = SKAction.rotate(byAngle: .pi / 4, duration: 1)
+//
+//        let waitAction = SKAction.wait(forDuration: 0.4)
+//        let sequence = SKAction.sequence([rotateAction, moveAction])
+//
+//        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+//
+//        let removeAction = SKAction.removeFromParent() //Important!
+//
+//        let zoomIn = SKAction.scale(by: 2, duration: 1)
+//
+//        let group = SKAction.group([moveAction, rotateAction])
+//
+//        let playSoundAction = SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false)
+//        let seq = SKAction.sequence([group, SKAction.removeFromParent()])
+//        ship.run(group)
+//
+//        let spawnBlockAction = SKAction.run {
+//            //let space
+//        }
         
         //sequence:
         //wait 0.2s, new spaceship,position, addChild, fadeIn, rotate, moveTo, removeFromParent

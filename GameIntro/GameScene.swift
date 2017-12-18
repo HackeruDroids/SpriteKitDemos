@@ -199,10 +199,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let waitAction = SKAction.wait(forDuration: 0.4)
         let sequence = SKAction.sequence([rotateAction, moveAction])
+        
+        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+        
+        let removeAction = SKAction.removeFromParent() //Important!
+        
+        let zoomIn = SKAction.scale(by: 2, duration: 1)
+        
         let group = SKAction.group([moveAction, rotateAction])
         
-        
+        let playSoundAction = SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false)
+        let seq = SKAction.sequence([group, SKAction.removeFromParent()])
         ship.run(group)
+        
+        let spawnBlockAction = SKAction.run {
+            //let space
+        }
+        
+        //sequence:
+        //wait 0.2s, new spaceship,position, addChild, fadeIn, rotate, moveTo, removeFromParent
+        
+        //repeating actions:
+        
+        
         //action. sequence - serial
         //action. parallel - group
     }

@@ -18,7 +18,7 @@
 		6D8D4BB41FE2D0F9004951A0 /* Swooshing-SoundBible.com-1214884243.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6D8D4BAC1FE2D0F8004951A0 /* Swooshing-SoundBible.com-1214884243.mp3 */; };
 		6D8D4BB51FE2D0F9004951A0 /* Swoosh 3-SoundBible.com-1573211927.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6D8D4BAD1FE2D0F8004951A0 /* Swoosh 3-SoundBible.com-1573211927.mp3 */; };
 		6D8D4BB61FE2D0F9004951A0 /* Swoosh 1-SoundBible.com-231145780.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6D8D4BAE1FE2D0F8004951A0 /* Swoosh 1-SoundBible.com-231145780.mp3 */; };
-		6D8D4BB71FE2D0F9004951A0 /* Bomb-SoundBible.com-891110113.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6D8D4BAF1FE2D0F8004951A0 /* Bomb-SoundBible.com-891110113.mp3 */; };
+		6D8D4BB71FE2D0F9004951A0 /* bomb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6D8D4BAF1FE2D0F8004951A0 /* bomb.mp3 */; };
 		6D8D4BB81FE2D0F9004951A0 /* Glass_Break-stephan_schutze-958181291.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6D8D4BB01FE2D0F8004951A0 /* Glass_Break-stephan_schutze-958181291.mp3 */; };
 		6D8D4BB91FE2D0F9004951A0 /* glass_ping-Go445-1207030150.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6D8D4BB11FE2D0F9004951A0 /* glass_ping-Go445-1207030150.mp3 */; };
 		6D8D4BBA1FE2D0F9004951A0 /* stephan_schutze-anvil_impact_1x-894647867.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6D8D4BB21FE2D0F9004951A0 /* stephan_schutze-anvil_impact_1x-894647867.mp3 */; };
@@ -39,7 +39,7 @@
 		6D8D4BAC1FE2D0F8004951A0 /* Swooshing-SoundBible.com-1214884243.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Swooshing-SoundBible.com-1214884243.mp3"; sourceTree = "<group>"; };
 		6D8D4BAD1FE2D0F8004951A0 /* Swoosh 3-SoundBible.com-1573211927.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Swoosh 3-SoundBible.com-1573211927.mp3"; sourceTree = "<group>"; };
 		6D8D4BAE1FE2D0F8004951A0 /* Swoosh 1-SoundBible.com-231145780.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Swoosh 1-SoundBible.com-231145780.mp3"; sourceTree = "<group>"; };
-		6D8D4BAF1FE2D0F8004951A0 /* Bomb-SoundBible.com-891110113.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Bomb-SoundBible.com-891110113.mp3"; sourceTree = "<group>"; };
+		6D8D4BAF1FE2D0F8004951A0 /* bomb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bomb.mp3; sourceTree = "<group>"; };
 		6D8D4BB01FE2D0F8004951A0 /* Glass_Break-stephan_schutze-958181291.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Glass_Break-stephan_schutze-958181291.mp3"; sourceTree = "<group>"; };
 		6D8D4BB11FE2D0F9004951A0 /* glass_ping-Go445-1207030150.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "glass_ping-Go445-1207030150.mp3"; sourceTree = "<group>"; };
 		6D8D4BB21FE2D0F9004951A0 /* stephan_schutze-anvil_impact_1x-894647867.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "stephan_schutze-anvil_impact_1x-894647867.mp3"; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 		6D5CA7741FD9B203008DE799 /* GameIntro */ = {
 			isa = PBXGroup;
 			children = (
-				6D8D4BAF1FE2D0F8004951A0 /* Bomb-SoundBible.com-891110113.mp3 */,
+				6D8D4BAF1FE2D0F8004951A0 /* bomb.mp3 */,
 				6D8D4BB01FE2D0F8004951A0 /* Glass_Break-stephan_schutze-958181291.mp3 */,
 				6D8D4BB11FE2D0F9004951A0 /* glass_ping-Go445-1207030150.mp3 */,
 				6D8D4BB31FE2D0F9004951A0 /* Slap-SoundMaster13-49669815.mp3 */,
@@ -161,7 +161,7 @@
 				6D5CA7831FD9B203008DE799 /* Assets.xcassets in Resources */,
 				6D8D4BBB1FE2D0F9004951A0 /* Slap-SoundMaster13-49669815.mp3 in Resources */,
 				6D8D4BB81FE2D0F9004951A0 /* Glass_Break-stephan_schutze-958181291.mp3 in Resources */,
-				6D8D4BB71FE2D0F9004951A0 /* Bomb-SoundBible.com-891110113.mp3 in Resources */,
+				6D8D4BB71FE2D0F9004951A0 /* bomb.mp3 in Resources */,
 				6D8D4BB91FE2D0F9004951A0 /* glass_ping-Go445-1207030150.mp3 in Resources */,
 				6D5CA7861FD9B203008DE799 /* LaunchScreen.storyboard in Resources */,
 				6D8D4BBA1FE2D0F9004951A0 /* stephan_schutze-anvil_impact_1x-894647867.mp3 in Resources */,

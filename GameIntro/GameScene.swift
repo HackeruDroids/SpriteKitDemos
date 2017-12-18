@@ -9,8 +9,33 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    func didBegin(_ contact: SKPhysicsContact) {
+        
+        var bodyA = contact.bodyA
+        var bodyB = contact.bodyB
+        
+        //1, 2, 4, 8
+        //make sure that a < b (Integer wise)
+        if bodyA.categoryBitMask > bodyB.categoryBitMask{
+            //swap:
+            bodyA = contact.bodyB
+            bodyB = contact.bodyA
+        }
+        
+        if bodyA.categoryBitMask == BallCategory && bodyB.categoryBitMask == FloorCategory{
+            print("You loose...")
+        }else if bodyA.categoryBitMask == BallCategory && bodyB.categoryBitMask == BrickCategory{
+            print("Break a brick")
+        }
+        
+    }
+    
+    func didEnd(_ contact: SKPhysicsContact) {
+        //
+    }
+    //in order to identify colission, we define categories. (UInt32, 2^x)
     //001 // 2^0
     //010 // 2^1
     //100 // 2^2
@@ -18,9 +43,11 @@ class GameScene: SKScene {
     let BallCategory: UInt32 = 1 << 0  // 1 // 0b0000000000010000
     let BrickCategory: UInt32 = 0b10 //2
     let FloorCategory: UInt32 = 1 << 2//0b100 //4
+    let PaddleCategory: UInt32 = 8 //1<<3 0b1000 //8
     
     override func didMove(to view: SKView) {
-        //mission: 7 min go
+        //register self as the delegate
+        physicsWorld.contactDelegate = self
         let backs = SKSpriteNode(imageNamed: "back")
         backs.position = CGPoint(x: frame.midX, y: frame.midY)
         backs.size = frame.size
@@ -43,7 +70,8 @@ class GameScene: SKScene {
         let bottomRect = CGRect(x: 0, y: y, width: size.width, height: 1)
         
         floor.physicsBody = SKPhysicsBody(edgeLoopFrom: bottomRect)
-        floor.physicsBody?.categoryBitMask = FloorCategory
+        //detect collissions:
+        floor.physicsBody?.categoryBitMask = FloorCategory // = 4
         addChild(floor)
     }
     func addBricks(){
@@ -65,7 +93,8 @@ class GameScene: SKScene {
             b.size = brick.size
             b.physicsBody = SKPhysicsBody(rectangleOf: b.size)
             b.name = "brick"
-            b.physicsBody?.categoryBitMask = BrickCategory //2
+            //detect collisions:
+            b.physicsBody?.categoryBitMask = BrickCategory // = 2
             b.physicsBody?.isDynamic = false
             b.position = CGPoint(x: left, y: vHeight - h)
             
@@ -79,6 +108,8 @@ class GameScene: SKScene {
         paddle.position = CGPoint(x: frame.midX, y: 0 + paddle.size.height * 3)
         paddle.physicsBody = SKPhysicsBody(rectangleOf: paddle.size)
         paddle.physicsBody?.isDynamic = false
+        //detect collision
+        paddle.physicsBody?.categoryBitMask = PaddleCategory // = 8
         addChild(paddle)
     }
     
@@ -120,7 +151,14 @@ class GameScene: SKScene {
         ball.physicsBody?.restitution = 1
         ball.physicsBody?.linearDamping = 0
         ball.physicsBody?.angularDamping = 0
+        
+        //collision detection: identifiers:
         ball.physicsBody?.categoryBitMask = BallCategory
+        
+        //use the detection:
+        //specify which collisions are of interest:
+        ball.physicsBody?.contactTestBitMask = FloorCategory | BrickCategory
+        
         ball.position = view!.center
         ball.size = CGSize(width: 35, height: 35)
         ball.name = "ball"
@@ -135,11 +173,38 @@ class GameScene: SKScene {
      
         let point = touches.first!.location(in: self) //location in scene
         
+        //play with actions:
+        addSpaceShip(point: point)
+        
         //find node by name
         let pad = childNode(withName: "paddle")!
         
         //isFingerOnPaddle?
         isFingerOnPaddle = pad.frame.contains(point)
+    }
+    
+    //play with actions:
+    func addSpaceShip(point: CGPoint){
+        //1) add a spaceship (add a spritenode position it using the point)
+        let ship = SKSpriteNode(imageNamed: "Spaceship")
+        ship.position = point
+        ship.size = CGSize(width: 50, height: 50)
+        //ship.scale(to: CGSize(width: 0.2, height: 0.2))
+        addChild(ship)
+        
+        
+        let moveAction = SKAction.moveTo(x: frame.width + ship.frame.width / 2, duration: 1)
+       
+        let rotateAction = SKAction.rotate(byAngle: .pi / 4, duration: 1)
+        
+        let waitAction = SKAction.wait(forDuration: 0.4)
+        let sequence = SKAction.sequence([rotateAction, moveAction])
+        let group = SKAction.group([moveAction, rotateAction])
+        
+        
+        ship.run(group)
+        //action. sequence - serial
+        //action. parallel - group
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
